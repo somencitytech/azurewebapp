@@ -2,10 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Basic Page</title>
+    <title>CSV Data Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>This is a simple HTML page.V1.0</p>
+    <h1 style="text-align:center;">CSV Data Table</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Country</th>
+        </tr>
+        <tr>
+            <td>Alice</td>
+            <td>alice@example.com</td>
+            <td>USA</td>
+        </tr>
+        <tr>
+            <td>Bob</td>
+            <td>bob@example.com</td>
+            <td>Canada</td>
+        </tr>
+        <tr>
+            <td>Charlie</td>
+            <td>charlie@example.com</td>
+            <td>UK</td>
+        </tr>
+    </table>
 </body>
 </html>
