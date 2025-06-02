@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CSV Data Table with Search</title>
+    <title>AI-Like Search Table</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,17 +22,18 @@
         th {
             background-color: #eee;
         }
-        #searchInput {
-            width: 300px;
+        #queryInput {
+            width: 60%;
             padding: 10px;
             font-size: 16px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>CSV Data Table</h1>
+    <h1>CSV Data Table with Smart Search</h1>
 
-    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for names, emails, or countries...">
+    <input type="text" id="queryInput" onkeyup="smartSearch()" placeholder="Try: who is from UK, show Alice, email contains bob">
 
     <table id="dataTable">
         <thead>
@@ -62,23 +63,29 @@
     </table>
 
     <script>
-        function filterTable() {
-            let input = document.getElementById("searchInput");
-            let filter = input.value.toLowerCase();
-            let table = document.getElementById("dataTable");
-            let tr = table.getElementsByTagName("tr");
+        function smartSearch() {
+            const input = document.getElementById("queryInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#dataTable tbody tr");
 
-            for (let i = 1; i < tr.length; i++) {
-                let tds = tr[i].getElementsByTagName("td");
+            rows.forEach(row => {
+                const cells = Array.from(row.getElementsByTagName("td")).map(td => td.textContent.toLowerCase());
                 let match = false;
-                for (let j = 0; j < tds.length; j++) {
-                    if (tds[j].textContent.toLowerCase().includes(filter)) {
-                        match = true;
-                        break;
-                    }
+
+                if (input.includes("from")) {
+                    const country = input.split("from")[1].trim();
+                    match = cells[2].includes(country);
+                } else if (input.includes("email contains")) {
+                    const emailPart = input.split("email contains")[1].trim();
+                    match = cells[1].includes(emailPart);
+                } else if (input.includes("show") || input.includes("name")) {
+                    const name = input.replace("show", "").replace("name", "").trim();
+                    match = cells[0].includes(name);
+                } else {
+                    match = cells.some(cell => cell.includes(input));
                 }
-                tr[i].style.display = match ? "" : "none";
-            }
+
+                row.style.display = match ? "" : "none";
+            });
         }
     </script>
 </body>
