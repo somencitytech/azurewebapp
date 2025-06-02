@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>User List</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  th { background-color: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<h1>User List</h1>
+<table id="userTable">
+  <thead>
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Age</th></tr>
+  </thead>
+  <tbody>
+  <!-- Data rows will go here -->
+  </tbody>
+</table>
+
+<script>
+  fetch('users.json')
+    .then(response => response.json())
+    .then(users => {
+      const tbody = document.querySelector('#userTable tbody');
+      users.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${user.id}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.age}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error loading JSON:', error);
+      const tbody = document.querySelector('#userTable tbody');
+      tbody.innerHTML = '<tr><td colspan="4">Failed to load user data.</td></tr>';
+    });
+</script>
+
+</body>
+</html>
